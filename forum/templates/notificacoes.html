@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Minhas Notificações</h2>
+
+<div class="notificacoes-container">
+    {% for notificacao in notificacoes %}
+        <div class="box_post">
+            <p class="mensagem">{{ notificacao.mensagem }}</p>
+            <div class="status">
+                {% if notificacao.lida %}
+                    <span class="lida"><strong>Lida</strong></span>
+                {% else %}
+                    <span class="nao-lida"><strong>Não Lida</strong></span>
+                    <a href="{% url 'forum:marcar_como_lida' notificacao.id %}" class="marcar-como-lida">Marcar como lida</a>
+                {% endif %}
+                {% if notificacao.topico %}
+                    <a href="{% url 'forum:topico_detail' notificacao.topico.id %}#resposta-{{ notificacao.resposta.id }}" class="ver-topico">
+                        Ver Comentário
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <div class="box_post">
+            <p>Você não tem notificações.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

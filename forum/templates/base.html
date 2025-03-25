@@ -1,0 +1,77 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curvilíneo Egressos</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+  <nav id="sidebar">
+    <ul>
+      <li>
+        <span class="logo">Curvilíneo Egressos</span>
+      </li>
+      <li>
+        <a href="{% url 'informes' %}">
+          <i class="fa-solid fa-envelopes-bulk"></i>
+          <span>Noticias</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'forum:sala_list' %}">
+          <i class="fa-solid fa-message"></i>
+          <span>Forum</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'formulario_lista' %}">
+          <i class="fa-solid fa-marker"></i>
+          <span>Pesquisas</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'dashboard' %}">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Painel</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'contas:explorar' %}">
+          <i class="fa-solid fa-ellipsis"></i>
+          <span>Explorar</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <main>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </main>
+  <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+
+</html>
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register("https://curvilinea-egressos.onrender.com/static/pwabuilder-sw.js")
+      .then((reg) => console.log("Service Worker registrado com sucesso!", reg))
+      .catch((err) => console.log("Erro ao registrar o Service Worker", err));
+  }
+</script>
+
+
+

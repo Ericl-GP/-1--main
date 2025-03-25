@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Tem certeza que deseja excluir este banner?</h2>
+<img src="{{ banner.image.url }}" width="200">
+<a href="{{ banner.link }}">{{ banner.link }}</a>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+</form>
+<a href="{% url 'banner_list' %}">volta</a>
+{% endblock %}

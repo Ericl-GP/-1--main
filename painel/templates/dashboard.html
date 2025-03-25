@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<p class="box_post">Dados Abertos</p>
+
+<details>
+    <summary class="box_post">dados geral</summary>
+    <div>
+        <h2>Usuários</h2>
+        <p>{{ total_users }}</p>
+    </div>
+    <div>
+        <h2>Ingressos</h2>
+        <p>{{ total_ingressos }}</p>
+    </div>
+    <div>
+        <h2>Egressos</h2>
+        <p>{{ total_egressos }}</p>
+    </div>
+
+    <div>
+        <h2>Formulários</h2>
+        <p>{{ total_formularios }}</p>
+    </div>
+</details>
+
+<details>
+    <summary class="box_post">usuarios</summary>
+    <h2>Cursos</h2>
+    {% for curso in cursos_data %}
+    <p>{{ curso.curso }}</p> <!-- Exibe o nome do curso -->
+    <div>
+        <div class="box_post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usuários</th>
+                        <th>Ingressos</th>
+                        <th>Egressos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ curso.total_usuarios }}</td>
+                        <td>{{ curso.total_ingressos }}</td>
+                        <td>{{ curso.total_egressos }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+</details>
+
+<details>
+    <summary class="box_post">salas</summary>
+    <h2>Salas</h2>
+
+    <!-- Tabela com dados das salas -->
+    {% for sala in salas_data %}
+    <p>{{ sala.sala }}</p> <!-- Exibe o nome da sala -->
+    <div>
+        <div class="box_post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categorias</th>
+                        <th>Tópicos</th>
+                        <th>Respostas</th>
+                        <th>Votos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ sala.total_categorias }}</td>
+                        <td>{{ sala.total_topicos }}</td>
+                        <td>{{ sala.total_respostas }}</td>
+                        <td>{{ sala.total_votos }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+</details>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<title>categorias - {{ sala.name }}</title>
+
+<h2>categorias de {{ sala.name }}</h2>
+<p><strong>Descrição:</strong> {{ sala.description }}</p>
+
+<!-- Link para criar subcategoria, visível apenas para administradores -->
+{% if request.user|can_create %}
+<a href="{% url 'forum:create_categoria' sala.id %}">Criar Subcategoria</a>
+{% endif %}
+
+<ul>
+    {% for categoria in categorias %}
+        <a href="{% url 'forum:topico_list' categoria.id %}" class="full-link">
+            <div class="box_post">
+                <li>
+                    {{ categoria.name }}
+                    
+                    <!-- Links de edição e exclusão visíveis apenas para administradores -->
+                    {% if request.user|can_create %}
+                        <a href="{% url 'forum:edit_categoria' sala.id categoria.id %}">
+                            <button class="btn-mini">Editar</button>
+                        </a>
+                        <a href="{% url 'forum:delete_categoria' sala_id=sala.id categoria_id=categoria.id %}">
+                            <button onclick="return confirm('Tem certeza?');" class="btn-mini">Excluir</button>
+                        </a>
+                    {% endif %}
+                </li>
+            </div>
+        </a>
+    {% endfor %}
+</ul>
+
+
+<a href="{% url 'forum:sala_list' %}">Voltar</a>
+
+{% endblock %}

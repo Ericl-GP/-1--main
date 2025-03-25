@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<title>Salas - Fórum</title>
+
+<p class="box_post">Fórum Acadêmico</p>
+
+{% if user.is_authenticated %}
+<!-- Link para criar sala, visível apenas para administradores -->
+{% if request.user|can_create %}
+<a href="{% url 'forum:create_sala' %}">Criar Sala</a>
+{% endif %}
+
+{% if salas %}
+<ul>
+    {% for sala in salas %}
+    <a href="{% url 'forum:categoria_list' sala_id=sala.id %}" class="full-link">
+        <div class="box_post">
+            <li>
+                {{ sala.name }}
+                <p class="disponibilidade">
+                    acesso:
+                    {% if sala.tipo_usuario_permitido %}
+                    {{ sala.get_tipo_usuario_permitido_display }}
+                    {% else %}
+                    Qualquer tipo de usuário
+                    {% endif %}
+                </p>
+
+                {% if request.user|can_create %}
+                <a href="{% url 'forum:edit_sala' sala.id %}">
+                    <button class="btn-mini">Editar</button>
+                </a>
+                <a href="{% url 'forum:delete_sala' sala.id %}">
+                    <button onclick="return confirm('Tem certeza?');" class="btn-mini">Excluir</button>
+                </a>
+                {% endif %}
+            </li>
+        </div>
+    </a>
+    {% endfor %}
+</ul>
+
+{% else %}
+{% if request.user|can_create %}
+<a href="{% url 'forum:create_sala' %}">Criar Sala</a>
+{% endif %}
+<p>Nenhuma sala cadastrada. ^_^</p>
+{% endif %}
+{% else %}
+<p><a href="{% url 'contas:login' %}">LOGIN necessário</a></p>
+{% endif %}
+
+{% endblock %}

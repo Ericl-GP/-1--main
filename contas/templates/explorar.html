@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<p class="box_post">Explorar</p>
+
+<a href="{% url 'contas:profile' %}" class="box_post">Perfil</a>
+<a href="{% url 'forum:listar_notificacoes' %}" class="box_post">notficaçoes</a>
+<a href="{% url 'forum:sobre' %}" class="box_post">Detalhes</a>
+
+{% endblock %}

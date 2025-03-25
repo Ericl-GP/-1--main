@@ -1,0 +1,18 @@
+<!-- form_form.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Editar{% else %}Criar{% endif %} Formulário</h1>
+
+<div class="box_post">
+    <a href="https://docs.google.com/forms/" target="_blank">CLIQUE PARA ACESSAR</a><br>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-mini">Salvar</button>
+    </form>
+</div>
+
+<a href="{% url 'formulario_lista' %}">Voltar</a><br>
+{% endblock %}

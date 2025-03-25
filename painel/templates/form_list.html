@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p class="box_post">Formulários Acadêmico</p>
+
+<form method="GET" action="{% url 'formulario_lista' %}" class="box_post">
+    <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar...">
+    <button type="submit">Pesquisar</button>
+</form>
+
+{% if user.is_authenticated %}
+<a href="{% url 'formulario_criar' %}" class="btn">Criar Novo Formulário</a>
+{% endif %}
+
+{% if forms %}
+<ul class="form-list">
+    {% for form in forms %}
+    <a href="{{ form.get_absolute_url }}" class="full-link">
+        <div class="box_post">
+            <li>
+                {{ form.titulo }}
+            </li>
+        </div>
+    </a>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nenhum formulário encontrado para "{{ search_query }}".</p>
+{% endif %}
+
+{% endblock %}

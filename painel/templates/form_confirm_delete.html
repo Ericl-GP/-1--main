@@ -1,0 +1,13 @@
+<!-- form_confirm_delete.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Excluir Formulário</h2>
+<p>Tem certeza de que deseja excluir o formulário "{{ form.titulo }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn-mini">Sim, excluir</button>
+</form>
+<a href="{% url 'formulario_lista' %}">Cancelar</a>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block content %}
+  <h1>{{ info.title }}</h1>
+  <p><strong>Descrição:</strong> {{ info.description }}</p>
+  <p><strong>Data de criação:</strong> {{ info.created_at|date:"d/m/Y H:i" }}</p> <!-- Formatação de data -->
+  <p><a href="{{ info.url }}" target="_blank">Acessar informe</a></p>
+
+  {% if request.user|can_create %}
+    <div class="actions">
+      <a href="{% url 'info_update' info.id %}" class="btn btn-primary">Editar</a>
+      <form action="{% url 'info_delete' info.id %}" method="POST" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+      </form>
+    </div>
+  {% endif %}
+
+  <a href="{% url 'informes' %}" class="btn btn-secondary">Voltar</a>
+
+{% endblock %}

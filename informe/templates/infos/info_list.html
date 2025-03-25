@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Lista de Informes</h1>
+    <a href="{% url 'info_create' %}">Adicionar Novo Informe</a>
+    <ul>
+        {% for info in infos %}
+            <li>
+                <a href="{{ info.url }}" target="_blank">{{ info.title }}</a> 
+                <p>{{ info.description }}</p>
+                <a href="{% url 'info_update' info.id %}">[Editar]</a>
+                <a href="{% url 'info_delete' info.id %}">[Excluir]</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'informes' %}">volta</a>
+{% endblock %}

@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.onrender.curvilinea_egressos.twa",
+        "sha256_cert_fingerprints": ["82:32:E6:AB:F0:54:26:06:73:6E:C7:EB:80:9E:E9:B5:B5:48:CA:31:37:3C:1E:B1:6A:32:52:AB:53:D2:C2:A1"]
+      }
+    }]

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% load static %} <!-- Adicionando esta linha para carregar a tag static -->
+
+{% block content %}
+<div class="profile-container">
+    <p class="box_post">Perfil</p>
+
+    <div class="box_post">
+
+        <!-- Exibindo foto de perfil -->
+        <div class="profile-picture">
+            {% if user.userprofile.avata %}
+            <img src="{{ user.userprofile.avata.url }}" alt="Foto de Perfil" class="img-thumbnail"
+                style="max-width: 200px;">
+            {% else %}
+            <img src="{% static 'img/userdef.svg' %}" alt="Foto de Perfil Padrão" class="img-thumbnail"
+                style="max-width: 200px;">
+            {% endif %}
+        </div>
+
+        <p><strong>Nome:</strong> {{ user.username }}</p>
+        <p><strong>E-mail:</strong> {{ user.email }}</p>
+
+        <!-- Exibindo o grupo do usuário -->
+        <p><strong>Grupo:</strong>
+            {% if user.groups.all %}
+            {% for group in user.groups.all %}
+            {{ group.name }}
+            {% endfor %}
+            {% else %}
+            Não atribuído
+            {% endif %}
+        </p>
+
+        <!-- Exibindo bio -->
+        <p><strong>Bio:</strong>
+            {% if user.userprofile.bio %}
+            {{ user.userprofile.bio }}
+            {% else %}
+            Bio não definida.
+            {% endif %}
+        </p>
+
+        <!-- Exibindo o tipo de usuário -->
+        <p><strong>Tipo de Usuário:</strong>
+            {% if user.userprofile.tipo_usuario %}
+            {{ user.userprofile.get_tipo_usuario_display }} <!-- Exibe a versão "amigável" -->
+            {% else %}
+            Tipo não definido.
+            {% endif %}
+        </p>
+
+        <!-- Exibindo os cursos do usuário -->
+        <p><strong>Cursos Matriculados:</strong>
+        <ul>
+            {% if user.userprofile.cursos.all %}
+            {% for curso in user.userprofile.cursos.all %}
+            <li>{{ curso.nome }}</li>
+            {% endfor %}
+            {% else %}
+            <li>Nenhum curso matriculado.</li>
+            {% endif %}
+        </ul>
+        </p>
+    </div>
+    <div class="box_post">
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'contas:edit_profile' %}" class="btn">Editar Perfil</a><br>
+        <a href="{% url 'contas:password_reset' %}">Redefinir senha</a><br>
+        <a href="{% url 'contas:delete_account' %}" class="btn">Deletar Perfil</a><br>
+        <a href="{% url 'contas:logout' %}" class="btn">Sair</a><br>
+        {% else %}
+        <a href="{% url 'contas:login' %}">LOGIN</a>
+        {% endif %}
+
+        {% if user.is_superuser %}
+        <a href="{% url 'admin:index' %}">Sistema</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

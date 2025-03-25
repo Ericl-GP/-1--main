@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<title>Editar Tópico - Fórum</title>
+
+<h1>Editar Tópico</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-mini">Salvar alterações</button>
+</form>
+<a href="{% url 'forum:topico_list' topico.categoria.id %}">Voltar</a>
+
+
+{% endblock %}

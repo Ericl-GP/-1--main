@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load custom_filters %}
+
+<p class="box_post">Atualizações</p>
+<a href="https://portal.ifto.edu.br/araguatins/">Portal IFTO Campus Araguatins</a><br>
+
+{% if user.is_superuser %}
+<a href="{% url 'banner_list' %}">Listar Banners</a>
+{% endif %}
+<br>
+
+<div class="box_post">
+    {% if banners %}
+    <div class="banner-container">
+        {% for banner in banners %}
+        <div class="banner-item">
+            <a href="{{ banner.link }}" target="_blank">
+                <img src="{{ banner.image.url }}" alt="Banner">
+            </a>
+            <p>{{ banner.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Nenhum banner encontrado.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const banners = document.querySelectorAll('.banner-item');
+        let currentBanner = 0;
+        let previousBanner = banners.length - 1;
+        const bannerContainer = document.querySelector('.banner-container');
+
+        function showBanner() {
+            banners[previousBanner].style.opacity = "0";
+            banners[currentBanner].style.opacity = "1";
+
+            const currentLink = banners[currentBanner].querySelector("a").href;
+            bannerContainer.setAttribute("onclick", `window.open('${currentLink}', '_blank')`);
+
+            previousBanner = currentBanner;
+            currentBanner = (currentBanner + 1) % banners.length;
+        }
+
+        if (banners.length > 0) {
+            banners.forEach((banner, index) => {
+                banner.style.position = "absolute";
+                banner.style.transition = "opacity 1.5s ease-in-out";
+                banner.style.opacity = index === 0 ? "1" : "0";
+            });
+
+            const firstLink = banners[0].querySelector("a").href;
+            bannerContainer.setAttribute("onclick", `window.open('${firstLink}', '_blank')`);
+
+            setInterval(showBanner, 10000); // Agora cada banner fica visível por 15 segundos
+        }
+    });
+</script>
+
+<style>
+    .banner-container {
+        position: relative;
+        width: 100%;
+        /* Ocupa toda a largura disponível */
+        height: 300px;
+        /* Altura fixa do contêiner (ajuste conforme necessário) */
+        overflow: hidden;
+        /* Oculta qualquer conteúdo que ultrapasse o contêiner */
+    }
+
+    .banner-item {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        /* Começa invisível */
+        transition: opacity 1.5s ease-in-out;
+        /* Deixa a troca mais suave */
+    }
+    
+    .banner-item img {
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do contêiner */
+        height: 100%;
+        /* Mantém a altura proporcional */
+        object-fit: contain;
+        /* Mantém a proporção da imagem sem distorcer */
+        display: block;
+        /* Remove o espaço em branco abaixo da imagem */
+    }
+</style>
+
+{% if user.is_superuser %}
+<a href="{% url 'info_create' %}">Criar Nova Info</a>
+{% endif %}
+
+<br><br>
+
+{% if infos %}
+<div class="box_post">
+    <ul>
+        {% for info in infos %}
+        <li>
+            <a href="{% url 'info_detail' info.id %}">{{ info.title }}</a>
+            <!-- Abre a página de detalhes -->
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+<p>Nenhuma info encontrada.</p>
+{% endif %}
+
+{% endblock %}

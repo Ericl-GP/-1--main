@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div >
+    <div class="modal-box">
+        <div class="modal-content">
+            <img src="{% static 'img/Curvilineo.png' %}">
+            <h2>Login</h2>
+            <form method="post" action="{% url 'contas:login' %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Seu nick *</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <ul class="error-list">
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Sua senha *</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <ul class="error-list">
+                            {% for error in form.password.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <button class="btn-mini" type="submit">Logar</button>
+                <button class="btn-mini"><a href="{% url 'contas:register' %}">Criar conta</a></button>
+            </form>
+
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
